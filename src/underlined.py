@@ -1,6 +1,5 @@
-__all__ = ['underlined']
-
 import re
+from mistune import Markdown
 
 UNDERLINED = r'\b_{1,3}(?=[^\s_])'
 UNDERLINED_END_RE = {
@@ -38,7 +37,7 @@ def render_underlined_mu(self, token, state) -> str:
 def render_underlined_html(self, token, state) -> str:
         return '<u>' + self.render_children(token, state) + '</u>'
 
-def underlined(md):
+def register_underlined_plugin(md: Markdown):
     """A mistune plugin to render underlined tags. 
     Most Markdown parsers render it as emphasis tag.
 

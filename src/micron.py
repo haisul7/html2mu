@@ -31,7 +31,7 @@ class MicronRenderer(MarkdownRenderer):
     def link(self, token: Dict[str, Any], state: BlockState) -> str:
         label = token.get('label')
         text = self.render_children(token, state)
-        out = '`[' + text + '`'
+        out = '`Ffff`B222`[ ' + text + ' `'  # custom styling for links
         if label:
             return out + '`[' + label + '`'
         attrs = token['attrs']
@@ -41,7 +41,7 @@ class MicronRenderer(MarkdownRenderer):
         elif 'mailto:' + text == url:
             return '`[' + text + '`'
         out += url
-        return out + ']'
+        return out + ']`b`f'
     
     def image(self, token: Dict[str, Any], state: BlockState) -> str:
         return self.link(token, state)
@@ -76,6 +76,8 @@ class MicronRenderer(MarkdownRenderer):
         return '-\n\n'
     
     def block_text(self, token: Dict[str, Any], state: BlockState) -> str:
+        print('BLOCK TEXT')
+        print(token['raw'])
         return self.render_children(token, state) + '\n'
     
     def block_code(self, token: Dict[str, Any], state: BlockState) -> str:
@@ -94,6 +96,13 @@ class MicronRenderer(MarkdownRenderer):
     
     def block_error(self, token: Dict[str, Any], state: BlockState) -> str:
         return ''
-    
-    def list(self, token: Dict[str, Any], state: BlockState) -> str:
-        return render_list(self, token, state)
+
+    def table(self, token: Dict[str, Any], state: BlockState) -> str:
+        print('TABLE')
+        print(token)
+        return self.render_children(token, state) + '\n'
+
+    def table_row(self, token: Dict[str, Any], state: BlockState) -> str:
+        print('TABLE ROW')
+        print(token)
+        return self.render_children(token, state)

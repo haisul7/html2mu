@@ -1,7 +1,7 @@
 from mistune import Markdown
 import argparse
 import re
-from underlined import underlined
+from underlined import register_underlined_plugin
 from micron import MicronRenderer
 
 def main():
@@ -17,10 +17,10 @@ def main():
     
     m2μr = MicronRenderer()
     m2μ = Markdown(renderer=m2μr)
-    underlined(m2μ)
+    register_underlined_plugin(m2μ)
 
     with open(args.mu_file, 'w') as muf:
         md_str = muf.write(m2μ(md_str))
 
 if __name__ == "__main__":
-	main()
+    main()
