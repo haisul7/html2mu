@@ -76,8 +76,6 @@ class MicronRenderer(MarkdownRenderer):
         return '-\n\n'
     
     def block_text(self, token: Dict[str, Any], state: BlockState) -> str:
-        print('BLOCK TEXT')
-        print(token['raw'])
         return self.render_children(token, state) + '\n'
     
     def block_code(self, token: Dict[str, Any], state: BlockState) -> str:
@@ -96,13 +94,3 @@ class MicronRenderer(MarkdownRenderer):
     
     def block_error(self, token: Dict[str, Any], state: BlockState) -> str:
         return ''
-
-    def table(self, token: Dict[str, Any], state: BlockState) -> str:
-        print('TABLE')
-        print(token)
-        return self.render_children(token, state) + '\n'
-
-    def table_row(self, token: Dict[str, Any], state: BlockState) -> str:
-        print('TABLE ROW')
-        print(token)
-        return self.render_children(token, state)
