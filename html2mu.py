@@ -46,21 +46,21 @@ def wrap_table(*, tag: Tag, text: str, **kwargs):
 def convert_html_to_markdown(html: str) -> str:
     return convert_to_markdown(html, custom_converters={'table': wrap_table})
 
-def convert_markdown_to_micron(md: str) -> str:
-    m2mu_r = MicronRenderer()
+def convert_markdown_to_micron(md: str, current_url='') -> str:
+    m2mu_r = MicronRenderer(current_url=current_url)
     m2mu = create_markdown(renderer=m2mu_r)
     register_underlined_plugin(m2mu)
     result_mu = m2mu(md)
     return result_mu
 
-def convert_html_to_micron(html: str) -> str:
+def convert_html_to_micron(html: str, current_url='') -> str:
     result_md = convert_html_to_markdown(html)
-    result_mu = convert_markdown_to_micron(result_md)
+    result_mu = convert_markdown_to_micron(result_md, current_url=current_url)
     return result_mu
 
 def webpage_to_micron(url: str) -> str:
     html = req.get(url).text
-    return convert_html_to_micron(html)
+    return convert_html_to_micron(html, current_url=url)
 
 if __name__ == '__main__':
     url = 'https://news.ycombinator.com/'

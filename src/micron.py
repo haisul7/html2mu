@@ -1,6 +1,6 @@
 from textwrap import indent
 from typing import Dict, Any
-
+from urllib.parse import urlparse
 from mistune.core import BlockState
 from mistune.renderers.markdown import MarkdownRenderer
 from mistune.util import strip_end
@@ -9,6 +9,10 @@ from mistune.util import strip_end
 class MicronRenderer(MarkdownRenderer):
     """A renderer to format Micron text."""
     NAME = 'micron'
+
+    def __init__(self, current_url: str = ''):
+        super().__init__()
+        self.current_url = current_url
 
     def __call__(self, tokens, state: BlockState):
         out = self.render_tokens(tokens, state)
@@ -28,6 +32,21 @@ class MicronRenderer(MarkdownRenderer):
 
     def strong(self, token: Dict[str, Any], state: BlockState) -> str:
         return '`!' + self.render_children(token, state) + '`!'
+
+    def _hijack_url(self, url: str) -> str:
+        if not url.startswith('http'):
+            if url.startswith('#'):
+                return f':/page/web.mu`url={self.current_url}{url}'
+            else:
+                # get root url and append the relative path
+                parsed = urlparse(self.current_url)
+                root = f'{parsed.scheme}://{parsed.netloc}'
+                if not url.startswith('/'):
+                    url = '/' + url
+                return f':/page/web.mu`url={root}{url}'
+
+
+        return f':/page/web.url`url={url}'
     
     def link(self, token: Dict[str, Any], state: BlockState) -> str:
         label = token.get('label')
@@ -37,6 +56,7 @@ class MicronRenderer(MarkdownRenderer):
             return out + '`[' + label + '`'
         attrs = token['attrs']
         url = attrs['url']
+        url = self._hijack_url(url)
         if text == url:
             return '`[' + text + '`'
         elif 'mailto:' + text == url:
