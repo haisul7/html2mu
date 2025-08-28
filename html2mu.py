@@ -4,8 +4,8 @@ from bs4.element import Tag
 from html_to_markdown import convert_to_markdown
 from mistune import create_markdown
 
-from src.micron import MicronRenderer
-from src.underlined import register_underlined_plugin
+from .src.micron import MicronRenderer
+from .src.underlined import register_underlined_plugin
 
 
 def wrap_table(*, tag: Tag, text: str, **kwargs):
