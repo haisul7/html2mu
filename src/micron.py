@@ -5,6 +5,8 @@ from mistune.core import BlockState
 from mistune.renderers.markdown import MarkdownRenderer
 from mistune.util import strip_end
 
+from escape import escape_url
+
 
 class MicronRenderer(MarkdownRenderer):
     """A renderer to format Micron text."""
@@ -33,20 +35,23 @@ class MicronRenderer(MarkdownRenderer):
     def strong(self, token: Dict[str, Any], state: BlockState) -> str:
         return '`!' + self.render_children(token, state) + '`!'
 
-    def _hijack_url(self, url: str) -> str:
-        if not url.startswith('http'):
-            if url.startswith('#'):
-                return f':/page/web.mu`url={self.current_url}{url}'
+    def _hijack_url(self, link_url: str) -> str:
+        if not link_url.startswith('http'):
+            if link_url.startswith('#'):
+                url = f'{self.current_url}{link_url}'
             else:
                 # get root url and append the relative path
                 parsed = urlparse(self.current_url)
                 root = f'{parsed.scheme}://{parsed.netloc}'
-                if not url.startswith('/'):
-                    url = '/' + url
-                return f':/page/web.mu`url={root}{url}'
+                if not link_url.startswith('/'):
+                    link_url = '/' + link_url
+                url = f'{root}{link_url}'
+        else:
+            url = link_url
 
+        url = escape_url(url)
 
-        return f':/page/web.url`url={url}'
+        return f':/page/web.mu`url={url}'
     
     def link(self, token: Dict[str, Any], state: BlockState) -> str:
         label = token.get('label')

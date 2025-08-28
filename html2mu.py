@@ -4,6 +4,7 @@ from bs4.element import Tag
 from html_to_markdown import convert_to_markdown
 from mistune import create_markdown
 
+from escape import unescape_url
 from .src.micron import MicronRenderer
 from .src.underlined import register_underlined_plugin
 
@@ -59,6 +60,7 @@ def convert_html_to_micron(html: str, current_url='') -> str:
     return result_mu
 
 def webpage_to_micron(url: str) -> str:
+    url = unescape_url(url)
     html = req.get(url).text
     return convert_html_to_micron(html, current_url=url)
 
