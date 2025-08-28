@@ -9,10 +9,10 @@ from src.underlined import register_underlined_plugin
 
 
 def wrap_table(*, tag: Tag, text: str, **kwargs):
-    if not kwargs.get('nested', False):
-        print('TABLE')
-        print(tag.attrs)
-        print(text[:100])
+    # if not kwargs.get('nested', False):
+    #     print('TABLE')
+    #     print(tag.attrs)
+    #     print(text[:100])
 
     # Extract nested tables first
     # nested_tables = tag.find_all('table')
@@ -42,6 +42,25 @@ def wrap_table(*, tag: Tag, text: str, **kwargs):
     # out += nested_table_content
 
     return out
+
+def convert_html_to_markdown(html: str) -> str:
+    return convert_to_markdown(html, custom_converters={'table': wrap_table})
+
+def convert_markdown_to_micron(md: str) -> str:
+    m2mu_r = MicronRenderer()
+    m2mu = create_markdown(renderer=m2mu_r)
+    register_underlined_plugin(m2mu)
+    result_mu = m2mu(md)
+    return result_mu
+
+def convert_html_to_micron(html: str) -> str:
+    result_md = convert_html_to_markdown(html)
+    result_mu = convert_markdown_to_micron(result_md)
+    return result_mu
+
+def webpage_to_micron(url: str) -> str:
+    html = req.get(url).text
+    return convert_html_to_micron(html)
 
 if __name__ == '__main__':
     url = 'https://news.ycombinator.com/'

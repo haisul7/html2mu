@@ -1,9 +1,10 @@
-from mistune.core import BlockState
-from mistune.util import strip_end
-from mistune.renderers._list import render_list
-from mistune.renderers.markdown import MarkdownRenderer
-from typing import Dict, Any
 from textwrap import indent
+from typing import Dict, Any
+
+from mistune.core import BlockState
+from mistune.renderers.markdown import MarkdownRenderer
+from mistune.util import strip_end
+
 
 class MicronRenderer(MarkdownRenderer):
     """A renderer to format Micron text."""
