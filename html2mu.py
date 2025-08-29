@@ -10,10 +10,10 @@ from .src.underlined import register_underlined_plugin
 
 
 def wrap_table(*, tag: Tag, text: str, **kwargs):
-    # if not kwargs.get('nested', False):
-    #     print('TABLE')
-    #     print(tag.attrs)
-    #     print(text[:100])
+    if not kwargs.get('nested', False):
+        print('TABLE')
+        print(tag.attrs)
+        print(text[:100])
 
     # Extract nested tables first
     # nested_tables = tag.find_all('table')
@@ -28,10 +28,11 @@ def wrap_table(*, tag: Tag, text: str, **kwargs):
     rows = [child for child in tag.children if isinstance(child, Tag) and child.name == 'tr']
     out = ''
     for row in rows:
-        nested_tables = row.find_all('table')
-        if len(nested_tables) == 1:  # special case: if row is a nested table we append it separately and not nest it
-            out += wrap_table(tag=nested_tables[0], text='', nested=True, **kwargs) + '\n'
-            nested_tables[0].decompose()
+        nested_tables = [child for child in row.children if isinstance(child, Tag) and child.name == 'table'] # row.find_all('table')
+        # if len(nested_tables) == 1:  # special case: if row is a nested table we append it separately and not nest it
+        for nested_table in nested_tables:
+            out += wrap_table(tag=nested_table, text='', nested=True, **kwargs) + '\n'
+            nested_table.decompose()
             # continue
 
         cols = [child for child in row.children if isinstance(child, Tag) and child.name in ('td', 'th')]
