@@ -47,6 +47,9 @@ def wrap_table(*, tag: Tag, text: str, **kwargs):
         col_texts = [col_text for col_text in col_texts if col_text.strip()]
         out += ' | '.join(col_texts) + '\n'
 
+        # escape false sections (> in the beginning of a line)
+        out = out.replace('\n>', '\n``>')
+
     return out
 
 def convert_html_to_markdown(html: str) -> str:
