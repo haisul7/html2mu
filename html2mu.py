@@ -13,7 +13,7 @@ from .src.underlined import register_underlined_plugin
 
 def wrap_table(*, tag: Tag, text: str, **kwargs):
     tag = deepcopy(tag)  # without this .dismantle() trick modifies the original tag
-    if kwargs.get('nested_level', 0) < 1:
+    if kwargs.get('nested_level', 0) < 0:
         print('TABLE', kwargs.get('nested_level', 0))
         print(tag.attrs)
         print(text[:100])
