@@ -1,3 +1,5 @@
+from copy import deepcopy
+
 import requests as req
 from bs4 import BeautifulSoup
 from bs4.element import Tag
@@ -10,8 +12,9 @@ from .src.underlined import register_underlined_plugin
 
 
 def wrap_table(*, tag: Tag, text: str, **kwargs):
-    if not kwargs.get('nested', False):
-        print('TABLE')
+    tag = deepcopy(tag)  # without this .dismantle() trick modifies the original tag
+    if kwargs.get('nested_level', 0) < 1:
+        print('TABLE', kwargs.get('nested_level', 0))
         print(tag.attrs)
         print(text[:100])
 
@@ -28,20 +31,21 @@ def wrap_table(*, tag: Tag, text: str, **kwargs):
     rows = [child for child in tag.children if isinstance(child, Tag) and child.name == 'tr']
     out = ''
     for row in rows:
+        # hackernews specific hacks
+        if len([_ for _ in row.children]) == 1:
+            row = next(row.children)
+
         nested_tables = [child for child in row.children if isinstance(child, Tag) and child.name == 'table'] # row.find_all('table')
         # if len(nested_tables) == 1:  # special case: if row is a nested table we append it separately and not nest it
+        kwargs['nested_level'] = kwargs.get('nested_level', 0) + 1
         for nested_table in nested_tables:
-            out += wrap_table(tag=nested_table, text='', nested=True, **kwargs) + '\n'
+            out += wrap_table(tag=nested_table, text='', **kwargs) + '\n'
             nested_table.decompose()
-            # continue
 
         cols = [child for child in row.children if isinstance(child, Tag) and child.name in ('td', 'th')]
         col_texts = [convert_to_markdown(col, convert_as_inline=True) for col in cols]
         col_texts = [col_text for col_text in col_texts if col_text.strip()]
         out += ' | '.join(col_texts) + '\n'
-
-    # Append flattened nested tables after main table
-    # out += nested_table_content
 
     return out
 
