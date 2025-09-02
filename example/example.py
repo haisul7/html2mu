@@ -1,11 +1,9 @@
 import os
 import sys
 
-from modules.html2mu.html2mu import convert_html_to_micron
-
 sys.path.append(os.path.dirname(os.path.abspath(__file__)) + '/..')
 
-from html2mu import webpage_to_micron
+from html2mu import webpage_to_micron, convert_html_to_micron
 
 
 if __name__ == '__main__':
