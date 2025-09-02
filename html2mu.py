@@ -1,3 +1,8 @@
+import sys, os
+
+# for compatibility as submodule
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
 from copy import deepcopy
 
 import requests as req
@@ -7,8 +12,8 @@ from html_to_markdown import convert_to_markdown
 from mistune import create_markdown
 
 from escape import unescape_url
-from .src.micron import MicronRenderer
-from .src.underlined import register_underlined_plugin
+from src.micron import MicronRenderer
+from src.underlined import register_underlined_plugin
 
 
 def wrap_table(*, tag: Tag, text: str, **kwargs):
