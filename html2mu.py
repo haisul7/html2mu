@@ -48,7 +48,7 @@ def wrap_table(*, tag: Tag, text: str, **kwargs):
         out += ' | '.join(col_texts) + '\n'
 
         # escape false sections (> in the beginning of a line)
-        out = out.replace('\n>', '\n``>')
+        out = out.replace('\n>', '\n``>')  # doesn't escape beginning of the text
 
     return out
 
