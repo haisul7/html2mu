@@ -1,0 +1,565 @@
+
+<!doctype html>
+<html>
+<head>
+<link rel="stylesheet" href="../css/water.css?v=19">
+<link rel="shortcut icon" type="image/x-icon" href="../gfx/icon.png">
+<meta charset="utf-8"/>
+<title>The End Is Nigh, For The Beta Days | unsigned.io</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<meta property="og:title" content="The End Is Nigh, For The Beta Days">
+<meta name="description" content="This post marks the beginning of the end for the beta phase of Reticulum, and describes the immediate future and priorities.">
+<meta property="og:description" content="This post marks the beginning of the end for the beta phase of Reticulum, and describes the immediate future and priorities.">
+<meta property="og:image" content="https://unsigned.io/images/ph_sl.webp">
+<meta property="og:url" content="https://unsigned.io/articles/2025_05_09_The_End_Is_Nigh_For_The_Beta_Days.html">
+<meta property="og:title" content="The End Is Nigh, For The Beta Days">
+<meta name="twitter:card" content="summary_large_image">
+<meta property="twitter:domain" content="unsigned.io">
+<meta property="twitter:url" content="https://unsigned.io/articles/2025_05_09_The_End_Is_Nigh_For_The_Beta_Days.html">
+<meta name="twitter:title" content="The End Is Nigh, For The Beta Days">
+<meta name="twitter:description" content="This post marks the beginning of the end for the beta phase of Reticulum, and describes the immediate future and priorities.">
+<meta name="twitter:image" content="https://unsigned.io/images/ph_sl.webp">
+
+</head>
+<body>
+<div id="load_overlay" style="background-color:#2a2a2f; position:absolute; top:0px; left:0px; width:100%; height:100%; z-index:2000;"></div>
+<span class="logo">unsigned.io</span>
+<p><center><span class="menu"><a href="../index.html">Home</a> | <a href="../log.html">Log</a> | <a href="../guides.html">Guides</a> | <a href="../software/index.html">Software</a> | <a href="../hardware/index.html">Hardware</a> | <a href="https://github.com/markqvist/Reticulum/discussions">Discussions</a> | <a href="../shop.html">Shop</a> | <a href="../contact.html">Contact Me</a> | <a href="../donate.html">Donate</a></span></center></p><hr><h3>One Year Over</h3>
+<p>Today, I've released version <code>0.9.5</code> of Reticulum. This marks the beginning of the very final stretch for the beta phase of Reticulum. About a year ago, I wrote <a href="../articles/2024_05_16_Are_We_There_Yet.html">a post</a> talking about the status of Reticulum, the journey so far, how my work on Reticulum was funded, and my thoughts about the future of the project. If you haven't already read it, I encourage you to do so, since it provides necessary context for this post.</p>
+<p>Back then, I also announced that the amount of resources I had allocated to developing Reticulum full-time had been exhausted, and that some sort of sustainable funding would need to be acquired if I were to continue to work full-time on Reticulum in the same manner I had done for the past four years.</p>
+<p>That <em>did</em> initially increase the amount of donations a bit, but currently, the recurring donations total â¬96 per month, and I have received on average â¬320 per month in community donations for this past year, with most stemming from single donations. I appreciate all of this so much, and I am very grateful to each and everyone who has believed enough in this to contribute. Thank you so much!</p>
+<p><center><img src="../images/ph_sl.webp" style="margin-top:12px; margin-bottom: 2px;"/></center></p>
+<p>Realistically though, this is not a sustainable way to live, and the primary reason I was able to squeeze in another full year of work, improvements and fast-paced updates was:</p>
+<p><strong>1)</strong> Almost inconceivable patience and support from my family and close friends who, for some reason, decided to bear with me for another year, and make sure I was able to carry out the work. I couldn't have done it without this.</p>
+<p><strong>2)</strong> One single individual who came forward and covered most of my costs for this time. If you're reading this, thank you. It made all of the below possible, and I hope you find it valuable and worthwhile, in the context of what has been achieved.</p>
+<p>The overall result is that version <code>1.0.0</code> of Reticulum is now closer than ever, and on the horizon for release this year, most likely in July. It's about time. Reticulum has been in beta for <em>four years</em>, and the project has benefited tremendously from this approach. But it already is (and for a long time has been) much more stable, functional and full-featured than other projects covering just parts of what Reticulum provides, and it even does it in much more general-purpose and robust ways.</p>
+<p>To complete the final stretch though, I will have to be realistic about a few things. But before going into details on those, let's have a look at what one year of work on Reticulum has actually yielded.</p>
+<h3>One Year Of Progress</h3>
+<p>In the previous status post, I said that I would focus more tightly on the core parts of the project, which is what I really excel at, and that is what I have tried to do. I think the results speak for themselves.</p>
+<p>I won't go into a free-form description of every single thing that has been accomplished, since that would make this a very long post, but just a few of the highlights include:</p>
+<ul>
+<li>Massive performance and memory optimizations</li>
+<li>Much faster I/O backend</li>
+<li>Significantly expanded hardware support</li>
+<li>Complete interface modularity</li>
+<li>Migrating to AES-256 encryption for all communication</li>
+<li>A new real-time voice protocol for Reticulum</li>
+<li>Much higher capacity for LXMF propagation networks</li>
+<li>Significant improvements to overall usability and utilities</li>
+<li>A long list of bugs fixed, and real-world usability improvements</li>
+</ul>
+<p>I want to point out, that much of this stuff is not just "writing the code". An equal amount of time, if not more, goes into the design and especially testing and verification of everything implemented. A testament to that is how stable and reliable Reticulum already is.</p>
+<p>To get an idea of the scope of work carried out in this past year, please expand this aggregated changelog of work, and just give it a quick glance:</p>
+<details>
+<summary>Changelog</summary>
+<ul><li>RNS</li>
+<ul>
+<li>Significantly improved memory utilisation, thread count and performance on nodes with many interfaces or clients</li>
+<li>Switched local instance communication to run over abstract domain sockets on Linux and Android</li>
+<li>Switched instance IPC to run over abstract domain sockets on Linux and Android</li>
+<li>Added support for AES-256 as the default link and packet encryption mode</li>
+<li>Added kernel event based I/O backend on Linux and Android</li>
+<li>Added fast BackboneInterface type</li>
+<li>Added support for XIAO-ESP32S3 to rnodeconf</li>
+<li>Added interactive shell option to rnsd</li>
+<li>Added API option to search for identity by identity hash</li>
+<li>Added option to run TCP and Backbone interfaces in AP mode</li>
+<li>Added dynamic link keepalive and timeout calculation</li>
+<li>Added ability to efficiently transfer files as responses in the Request API</li>
+<li>Added ability to include metadata on Resource transfers</li>
+<li>Added option to specify Resource auto-compression limits</li>
+<li>Added option to specify Request response auto-compression limits</li>
+<li>Added allow overwrite option to rncp</li>
+<li>Added support for AES-256 mode to links and packets</li>
+<li>Added dynamic link mode support</li>
+<li>Added get_mode() method to link API</li>
+<li>Added instance_name option and description to default config file</li>
+<li>Improved RNodeMultiInterface host communications specification</li>
+<li>Improved rncp statistics output</li>
+<li>Improved link and reverse-table culling</li>
+<li>Improved hardware MTU auto-configuration</li>
+<li>Improved handling of file transfers using the Resource API</li>
+<li>Improved Resource transfer memory consumption</li>
+<li>Improved memory consumption of applications connected to a shared instance</li>
+<li>Improved ratchet persist reliability if Reticulum is force killed while persisting ratchets</li>
+<li>Improved rncp memory consumption for large files</li>
+<li>Fixed an occasional I/O thread hang on instance shutdown, that would result in an error printed to the console</li>
+<li>Fixed announce handlers not triggering after shared instance disappearance</li>
+<li>Fixed various minor interface logging inconsistencies</li>
+<li>Fixed various minor interface checking inconsistencies</li>
+<li>Fixed interface string representation for some interfaces</li>
+<li>Fixed instance name config option being overwritten if option was not last in section</li>
+<li>Fixed unhandled potential exception on fast-flapping BackboneInterface connections</li>
+<li>Updated internal configobj implementation</li>
+<li>Refactored various parts of the transport core code</li>
+<li>Swicthed to using internal netinfo implementation instead of including full ifaddr library</li>
+<li>Cleaned out unneeded dependencies</li>
+<li>Enabled link MTU discovery by default</li>
+<li>Added on-demand object code compilation and loader shim</li>
+<li>Added link API methods</li>
+<li>Added child interface spawning for AutoInterface</li>
+<li>Fixed corrupt ratchet files not being removed on maintenance cleaning</li>
+<li>Fixed rnid not waiting for announce timebase tick before announcing</li>
+<li>Fixed missing RX/TX bytes statistics assignment</li>
+<li>Fixed potential daemon thread IO buffer deadlock on externally mediated shutdown signal</li>
+<li>Fixed missing check for path announce emission timestamp in lower hop-count announce processing</li>
+<li>Added resource reject signalling</li>
+<li>Added error reporting on configured radio parameter mismatch on Android</li>
+<li>Improved thread configuration for transport core threads</li>
+<li>Updated examples</li>
+<li>Added MTU autoconfiguration on interfaces that support higher MTUs</li>
+<li>Added link MTU autodiscovery and path clamping</li>
+<li>Added dynamic SDU calculations based on link MTU to Resource, Channel and Buffer</li>
+<li>Added resource EIFR continuity to split resource handling</li>
+<li>Added interference status to RNodeInterface</li>
+<li>Fixed a display bug in rnstatus</li>
+<li>Added live traffic stats to rnstatus</li>
+<li>Added T3S3 support to rnodeconf</li>
+<li>Added Heltec T114 support to rnodeconf</li>
+<li>Added LilyGO T-Echo support to rnodeconf</li>
+<li>Added option to print device configuration to rnodeconf</li>
+<li>Improved CPU utilisation and memory consumption</li>
+<li>Improved rnsd restart time on systems with many interfaces</li>
+<li>Improved rncp status output</li>
+<li>Improved packet filter performance</li>
+<li>Improved interface detachment handling</li>
+<li>Improved resource transfer timing and performance</li>
+<li>Improved Transport core efficiency</li>
+<li>Improved reliability of ratchet reloads if I/O conflicts occur</li>
+<li>Improved logging</li>
+<li>Improved built-in profiler</li>
+<li>Fixed a potential deadlock in logging</li>
+<li>Fixed time formatters not handling negative times</li>
+<li>Updated example code</li>
+<li>Added noise floor output to rnstatus for supported interfaces</li>
+<li>Added channel noise floor and CSMA parameter reporting to RNodeInterface</li>
+<li>Added ability to set display rotation in rnodeconf</li>
+<li>Added ability to configure interference avoidance to rnodeconf</li>
+<li>Fixed missing console image install on Heltec V3 in rnodeconf</li>
+<li>Allow announce handlers to receive announce packet hash</li>
+<li>Fix packet RSSI/SNR/Q cache not being available on standalone instances</li>
+<li>Added support for packaging RNS to OpenWRT</li>
+<li>Added ability to run rnstatus as application-local imported module</li>
+<li>Added ability to reflect RNS log output to app-internal log handler callback</li>
+<li>Added display read functionality to RNodeInterface</li>
+<li>Fixed a regression in RNodeMultiInterface caused by earlier refactoring</li>
+<li>Imrpoved documentation</li>
+<li>Added ability to load and configure custom, user-supplied interfaces</li>
+<li>Added IPv6 support to TCPClientInterface and TCPServerInterface</li>
+<li>Added an init option to the API for requiring an existing shared instance</li>
+<li>Changed rnstatus behaviour to only show status if Reticulum is already running</li>
+<li>Fixed KISSInterface beacon length for compatibility with software modems</li>
+<li>Fixed interface client count sometimes reporting incorrect values on TCP and I2P interfaces</li>
+<li>Refactored and improved interface initialisation and configuration handling</li>
+<li>Refactored interface code to be more consistent</li>
+<li>Refactored various deprecated references and names</li>
+<li>Updated documentation and manual</li>
+<li>Fixed missing close of file handles</li>
+<li>Fixed invalid values returned from get_snr() and get_q() physical layer stats API functions</li>
+<li>Improved RNode BLE reconnection realiability</li>
+<li>Added RNode battery state to rnstatus output</li>
+<li>Fixed resource transfer hanging for a long time over slow links if proof packet is lost</li>
+<li>Fixed missing import on Android</li>
+<li>Fixed a bug in resource transfer progress calculations</li>
+<li>Added physical layer transfer rate output option to rncp</li>
+<li>Added save directory option to rncp</li>
+<li>Improved path handling for the fetch-jail option of of rncp</li>
+<li>Added error detection for modem communication timeouts on connected RNode devices</li>
+<li>Added support for T-Beam Supreme devices to rnodeconf</li>
+<li>Added support for T3S3 devices to rnodeconf</li>
+<li>Added support for T-Deck devices to rnodeconf</li>
+<li>Added support for new hardware error codes from connected RNodes</li>
+<li>Added the ability to control the display on nRF52-based RNodes</li>
+<li>Improved resource transfers over very slow links, by adding more suitable MAX_WINDOW cap if link speed is continously below threshold.</li>
+<li>Improved rnodeconf flashing so manual resets for some devices are no longer required</li>
+<li>Added edge case handling for receiving a link proof after the link had timed out and been closed, but before it having been purged from active links table</li>
+<li>Updated supported hardware section of the manual with new boards</li>
+<li>Tuned path request timing for roaming instances</li>
+<li>Fixed a bug that caused RNS to fail to initialise in Termux on Android</li>
+<li>Fixed a bug in RNodeInterface firmware version comparison</li>
+<li>Fixed a bug in the serial framing of RNodeMultiInterface</li>
+<li>Fixed a bug in sub-interface spawning of RNodeMultiInterface</li>
+<li>Added Bluetooth Low Energy support to RNodeInterface</li>
+<li>Added RNode battery information to rnstatus output</li>
+<li>Added display blanking configuration to rnodeconf</li>
+<li>Added NeoPixel intensity configuration to rnodeconf</li>
+<li>Added additional information to interface statistics</li>
+<li>Updated documentation</li>
+<li>Added handling of a transport edge-case</li>
+<li>Added interface prioritisation according to reported bitrate</li>
+<li>Added support for openCom XL to rnodeconf</li>
+<li>Added performance profiler to built-in debugging tools</li>
+<li>Tuned link traffic timeouts</li>
+<li>Fixed a module import error in AX25KissInterface</li>
+<li>Fixed a missing exception on erroneous destination initialisation</li>
+<li>Added key ratchet rotation and signalling</li>
+<li>Added ratchet API to documentation</li>
+<li>Added initial support for flashing T-Echo devices to rnodeconf</li>
+<li>Added remote management config options to example config</li>
+<li>Added automtic integration tests to source repository</li>
+<li>Fixed a regression that caused RNS not to work on Python versions lower than 3.10</li>
+<li>Fixed missing establishment_rate property init on Link objects</li>
+<li>Added support for RNode Multi interfaces</li>
+<li>Added initial support for remote management of Reticulum instances</li>
+<li>Improved resource transfer performance for large resources</li>
+<li>Improved path rediscovery in topologies with roaming transport nodes</li>
+<li>Fixed incorrect TX power limit on Android RNode interfaces</li>
+<li>Added ability to fetch remote files to rncp</li>
+<li>Added fetch request jail option to rncp</li>
+<li>Improved rncp status display output</li>
+<li>Added link table statistics to rnstatus</li>
+<li>Fixed rnstatus JSON output bug when IFAC was enabled on an interface</li>
+<li>Added remote instance interface status to rnstatus</li>
+<li>Added ability to query path- and rate-tables on remote instances with rnpath</li>
+<li>Added JSON output option to rnpath utility</li>
+<li>Added max hops filter to rnpath path-table out</li>
+<li>Added link age getter to API</li>
+<li>Added request concluded status to API</li>
+<li>Fixed invalid resource progress reported in some cases</li>
+<li>Fixed rnodeconf failure to set firmware hash for NRF52 boards on macOS</li>
+<li>Fixed broken --rom command line option in rnodeconf</li>
+<li>Fixed various typos in documentation</li>
+<li>Updated documentation with new API functions and features</li>
+<li>Added support for AutoInterface on Windows</li>
+<li>Added support for recursive path resolution for clients on roaming-mode interfaces</li>
+<li>Added RAK4631 support to rnodeconf</li>
+<li>Added LilyGO T3S3 support to rnodeconf</li>
+<li>Added ability to get target and calculated hashes via rnodeconf</li>
+<li>Fixed DTR timing making flashing fail on Windows in rnodeconf</li>
+<li>Fixed various output and menu bugs in rnodeconf</li>
+<li>Added support for flashing and autoinstalling Heltec V3 boards to rnodeconf</li>
+<li>Added custom EEPROM bootstrapping capabilities to rnodeconf</li>
+<li>Added ability to load identities from file to Echo and Link examples</li>
+<li>Added ability to specify multicast address type in AutoInterface configuration</li>
+<li>Added link getter to resource advertisement class</li>
+<li>Improved path response logic and timing</li>
+<li>Improved path request timing</li>
+<li>Fixed a bug in Link Request proof delivery on unknown hop count paths</li>
+<li>Fixed broken link packet routing in topologies where transport packets leak to non-intended instances in the link chain</li>
+<li>Fixed typos in documentation</li>
+</ul>
+<li>LXMF</li>
+<ul>
+<li>Improved memory consumption for propagation nodes</li>
+<li>Improved propagation node sync efficiency by sorting peers according to STR</li>
+<li>Improved handling of message queues for peers with low transfer limits</li>
+<li>Redesigned peer rotation to be much faster and more responsive to real-time network conditions</li>
+<li>Added ability to cancel outbound messages</li>
+<li>Added message rejection signalling if message exceeds transfer limit</li>
+<li>Added sync transfer rate to propagation node peer stats</li>
+<li>Added handling of corrupted transient ID cache</li>
+<li>Added ability to configure static peers</li>
+<li>Added ability to specify maximum number of peers</li>
+<li>Added lxmd status query API function</li>
+<li>Fixed a potential division by zero bug</li>
+<li>Added options to the default configuration file</li>
+<li>Added message ingest API option</li>
+<li>Improved duplicate message detection over longer timeframes</li>
+<li>Added propagation node announce data validation to announce handler</li>
+<li>Fixed missing byteorder argument on stamp value calculation</li>
+<li>Fixed incorrect progress value on path waiting for outbound messages</li>
+<li>Fixed a bug in inbound ticket cleaning</li>
+<li>Fixed a bug that could cause propagation node peer destinations to be created before identity was resolved</li>
+<li>Fixed a bug that could cause existing propagation node links to be torn down if the propagation node address was updated with the same address</li>
+<li>Improved opportunistic delivery performance</li>
+<li>Added path rediscovery during opportunistic delivery if path fails</li>
+<li>Added backchannel delivery over already established links</li>
+<li>Improved opportunistic delivery logic and performance</li>
+<li>Improved logging</li>
+<li>Fixed a bug in the stamp cost extractor function</li>
+<li>Fixed a bug that would prevent running multiple LXMRouter instances within the same program.</li>
+<li>Enabled Reticulum key ratchets for LXMF</li>
+<li>Added stamp generation, validation and automatic signalling</li>
+<li>Added delivery ticket functionality, for allowing trusted senders to bypass stamp requirements</li>
+<li>Fixed a bug in opportunistic delivery queue processing</li>
+<li>Updated LXMF fields</li>
+<li>Updated field specification</li>
+<li>Added fields custom data types, as well as for development, testing and debugging</li>
+<li>Added audio mode specifications for audio fields</li>
+<li>Fixed a bug that sometimes caused delivery proofs to be sent too late</li>
+</ul>
+<li>LXST</li>
+<ul>
+<li>Designed and implemented Lightweight Extensible Signals Transport, a secure general-purpose, real-time audio and signals transport protocol for Reticulum, allowing developers to easily create secure telephony, audio and voice communications systems</li>
+</ul>
+<li>RNode Firmware</li>
+<ul>
+<li>Added support for SeeedStudio XIAO-ESP32S3</li>
+<li>Added support for Heltec T114</li>
+<li>Added support for LilyGO T-Echo</li>
+<li>Added support for Heltec T114</li>
+<li>Added support for LilyGO T3S3 SX1280 with PA</li>
+<li>Added support for Heltec32 V3 boards</li>
+<li>Added support for LilyGO T3 boards with TCXO</li>
+<li>Added support for T-Beam Supreme devices</li>
+<li>Added support for T3S3 devices with SX127x and SX126x modems</li>
+<li>Added support for T-Deck devices</li>
+<li>Added battery status reporting over BLE</li>
+<li>Added battery monitoring on T3S3</li>
+<li>Added ability to configure display rotation</li>
+<li>Added ability to configure interference avoidance</li>
+<li>Added noise-floor monitoring and reporting to host</li>
+<li>Added ability to specify per-board transceiver OCP limit</li>
+<li>Added support for flashing T3S3 boards</li>
+<li>Improved CSMA perfomance and packet handling</li>
+<li>Improved BLE pairing on ESP32 boards</li>
+<li>Improved BLE pairing on nRF boards</li>
+<li>Improved display handling on Heltec T114</li>
+<li>Added signalling of detected interference to the host</li>
+<li>Implemented a fix for an intermittent hardware bug in SX126x and SX128x transceiver chips that caused interference avoidance and RSSI detection to hang</li>
+<li>Added "Missing Config" graphic instead of "Hardware Failure"</li>
+<li>Fixed single-byte configuration changes not being saved on nRF-based boards</li>
+<li>Reworked preamble and slot timing calculations</li>
+<li>Improved BLE reliability on RAK4631</li>
+<li>Fixed a firmware provisioning bug on RAK4631</li>
+<li>Improves BLE on RAK4631</li>
+<li>Adds graceful BLE disconnect on device sleep</li>
+<li>Fixes intermittent packet corruption on RAK4631</li>
+<li>Fixes incorrect preamble calculation on SX1280</li>
+<li>Improves CSMA parameters and P-curve</li>
+<li>Updated console image to include latest packages</li>
+<li>Fixed display sleep on T3S3</li>
+<li>Improved BLE pairing</li>
+<li>Added RAK4631 firmware to build artifacts</li>
+<li>Added display support on RAK4631 devices</li>
+<li>Added indication of outgoing packets to waterfall display</li>
+<li>Added user button input handling to all devices with a built-in user button</li>
+<li>Added free memory monitoring and indication to connected host device on low memory</li>
+<li>Improved inbound packet handling on ESP32 and nRF52 devices, fixing a potential packet corruption bug</li>
+<li>Improved flashing procedure for devices with CDC serial drivers, so manual resets and bootloader modes are no longer necessary to flash and update</li>
+<li>Added support for Bluetooth Low Energy connections on supported devices</li>
+<li>Added input button actions for boards with a built-in button.</li>
+<li>Added battery status and bootstrap console support to Heltec V3 boards</li>
+<li>Added ability to configure NeoPixel intensity from rnodeconf</li>
+<li>Added ability to configure display blanking timeout from rnodeconf</li>
+<li>Updated makefile to use specific version of ESP-IDF</li>
+<li>Improved battery calculations on devices without dedicated PMU</li>
+<li>Fixed display intensity configuration regression</li>
+<li>Fixed ESP32 bluetooth RX and TX buffers</li>
+<li>Added deep sleep support on T3S3</li>
+<li>Various quality updates for nRF / RAK4631</li>
+<li>Fixed a bug with antenna switch utilisation on RAK4631</li>
+<li>Updated console image to include latest packages</li>
+<li>Added button input and deep sleep for supported boards</li>
+<li>Fixed TRX switch pin init for SX1280 chips</li>
+<li>Use hardware RNG for CSMA r-value seed on ESP32</li>
+</ul>
+<li>Sideband</li>
+<ul>
+<li>Added the ability to make and receive LXST voice calls</li>
+<li>Added basic voice call UI</li>
+<li>Added option to configure audio devices for LXST voice calls</li>
+<li>Added option to block non-trusted callers</li>
+<li>Added support for sharing any file type as attachment on Android</li>
+<li>Added link stats to object details</li>
+<li>Added a BME280 telemetry plugin example</li>
+<li>Added button on Android to quickly go to full RNS interface status</li>
+<li>Improved map initialisation time</li>
+<li>Fixed audio messages sometimes inadverdently playing on swipe back on Android</li>
+<li>Fixed an intermittent error on telemetry plugin initialisation</li>
+<li>Added ability to export telemetry to MQTT brokers</li>
+<li>Added MQTT renderers for all telemetry types</li>
+<li>Added LXMF Propagation Node statistics sensor type to Telemeter</li>
+<li>Added RNS Transport statistics sensor type to Telemeter</li>
+<li>Added Connection Map sensor type to Telemeter</li>
+<li>Added periodic cleaning of old telemetry data from the database</li>
+<li>Improved the overall performance and reliability of the telemetry engine</li>
+<li>Improved markdown rendering</li>
+<li>Updated plugin examples</li>
+<li>Fixed a bug that would cause the announce stream to stop working due to missing signal icon specification</li>
+<li>Added ability to cancel outgoing messages</li>
+<li>Added ability to render messages formatted with markdown</li>
+<li>Added ability to compose messages with markdown</li>
+<li>Added ability to query peer telemetry from the map by right-clicking on the peer</li>
+<li>Added auto-switching of message mode on attachment</li>
+<li>Added indication if receiver rejects message</li>
+<li>Added support for SX1280 bandwidth options to RNode configuration</li>
+<li>Added ability to launch RNode flasher directly from utilities</li>
+<li>Added error message display if the configured RNode parameters were not validated by the radio</li>
+<li>Improved BBCode markup rendering</li>
+<li>Improved UI feedback when adding attachments</li>
+<li>Improved notification formatting</li>
+<li>Updated RNode flasher to latest version</li>
+<li>Fixed formatting of repository server URLs when device has multiple IP addresses</li>
+<li>Fixed a stray newline character in repo URLs</li>
+<li>Fixed a bug that caused invalid SSL certificate generation on Android</li>
+<li>Fixed a bug that caused invalid GPS data struct packing in some situations</li>
+<li>Fixed a bug in propagation node detection in daemon mode</li>
+<li>Fixed a bug that caused attachment names not to display while sending</li>
+<li>Added Liam Cottle's RNode flasher to the internal repository</li>
+<li>Updated message color scheme for better readability and theme consistency</li>
+<li>Added option to switch back to classic message colors</li>
+<li>Updated theme and user interface defaults for new installations</li>
+<li>Added signal stats to the announce stream (if available from interface)</li>
+<li>Added ability to render rich markup in messages</li>
+<li>Added BBCode syntax for formatting</li>
+<li>Ability to render simple graphics and layouts with monospaced and terminal fonts</li>
+<li>Ability to use all glyphs and icons included in Nerd Fonts</li>
+<li>Added per-object live-tracking mode for telemetry-enabled peers</li>
+<li>Added ability to add any number of interfaces via the Advanced RNS Configuration option</li>
+<li>Added Utilities section</li>
+<li>Added full rnstatus output to utilities</li>
+<li>Added a log viewer to utilities</li>
+<li>Added RNode flasher to utilities</li>
+<li>Added advanced RNS configuration to utilities</li>
+<li>Added support for the repository server on desktop operating systems</li>
+<li>Added RNode firmwares to the repository content updater</li>
+<li>Added serving the repository over HTTPS, with a self-signed certificate</li>
+<li>Fixed desktop entry icon reference for Raspberry Pi OS</li>
+<li>Added ability to add message attachments from sharing intent on Android</li>
+<li>Added ability to add message attachments with drag-and-drop on desktop</li>
+<li>Added user interface scaling option</li>
+<li>Various minor UI tweaks and improvements</li>
+<li>Updated RNS and LXMF to latest versions</li>
+<li>Fixed a bug causing a completely black user interface after resume on Android</li>
+<li>Fixed incorrect stamp cost display in announce stream</li>
+<li>Fixed incorrect GPS speed being reported to the telemetry engine</li>
+<li>Fixed stamp generation status not being displayed correctly in some cases</li>
+<li>Added support for connecting to RNodes over BLE</li>
+<li>Added RNode battery info to connectivity status dialog</li>
+<li>Fixed a bug in service/frontend communication on Android</li>
+<li>Fixed invalid automatic telemetry request scheduling timebase</li>
+<li>Added option to use high-quality voice for PTT</li>
+<li>Improved notification handling</li>
+<li>Tapping notifications on Android now goes directly to the relevant conversation</li>
+<li>Allow predictive text input on Android by default</li>
+<li>Added option to block predictive text input</li>
+<li>Automatically ask user for background service permission on Android</li>
+<li>Fixed notifications not appearing on some Android versions</li>
+<li>Fixed file and image attachments not working on Android 10</li>
+<li>Added automatic path rediscovery during opportunistic delivery if a path fails</li>
+<li>Fixed notifications not being displayed on some devices</li>
+<li>Significantly improved message delivery performance and efficiency</li>
+<li>Send messages opportunistically if destination ratchets are available</li>
+<li>Added delivery method icons to message view</li>
+<li>Improved announce details display</li>
+<li>Improved feedback when closing app on desktop</li>
+<li>Various UI improvements</li>
+<li>Tuned announce intervals</li>
+<li>Dispatch messages via background service on Android</li>
+<li>Fixed a bug that caused undecodable messages to fail conversation loading</li>
+<li>Added configuration option for ignoring messages with invalid stamps</li>
+<li>Added outbound stamp cost handling and generation</li>
+<li>Added inbound stamp cost settings to preferences</li>
+<li>Added message details dialog</li>
+<li>Added message encryption information to message details</li>
+<li>Added ratchet information to object details</li>
+<li>Added stamp cost information to object details</li>
+<li>Added delivery ticket information to object details</li>
+<li>Sideband will now automatically include delivery tickets to trusted peers</li>
+<li>Fixed dialog sizing on mobile devices</li>
+<li>Fixed a bug that caused attempted notification delivery when running in daemon mode</li>
+<li>Fixed a bug that caused PTT button not to be hidden on conversations with PTT disabled</li>
+<li>Fixed a bug in periodic random announce interval calculation</li>
+<li>Added outbound stamp cost handling and generation</li>
+<li>Added inbound stamp cost settings to preferences</li>
+<li>Added message details dialog</li>
+<li>Added message encryption information to message details</li>
+<li>Added ratchet information to object details</li>
+<li>Added stamp cost information to object details</li>
+<li>Added delivery ticket information to object details</li>
+<li>Sideband will now automatically include delivery tickets to trusted peers</li>
+<li>Fixed dialog sizing on mobile devices</li>
+<li>Fixed a bug that caused attempted notification delivery when running in daemon mode</li>
+<li>Fixed a bug that caused PTT button not to be hidden on conversations with PTT disabled</li>
+<li>Fixed a bug in periodic random announce interval calculation</li>
+<li>Added inbound PTT audio queue</li>
+<li>Added PTT playback block when recording a message</li>
+<li>Added PTT activation by space key</li>
+<li>Added battery temperature to telemetry</li>
+<li>Improved database transaction concurrency handling on Android</li>
+<li>Added PTT mode for audio messages</li>
+<li>Added command-line options to import and export Sideband settings for changing configuration on daemon-mode Sideband instances</li>
+<li>Improved telemetry processing and sending</li>
+<li>Improved notification handling</li>
+<li>Fixed a bug that would sometimes cause scheduled telemetry to be delayed</li>
+<li>Fixed Sideband not detecting RAK4631-based boards over USB</li>
+<li>Fixed Sideband not detecting LilyGO T3S3 boards over USB</li>
+<li>Added Linux desktop integration regardless of installation source</li>
+<li>Added install instructions for Raspberry Pi</li>
+<li>Updated installation instructions for some platforms</li>
+<li>Updated dependencies to mitigate numpy/codec2 incompatibilities</li>
+<li>Fixed error display and audio player on missing codec2 library</li>
+<li>Fixed various minor audio bugs</li>
+<li>Fixed an invalid import bug</li>
+<li>Fixed invalid category in desktop entry</li>
+<li>Added Objects & Devices view</li>
+<li>Added audio messaging in Codec2 and Opus encoding (currently supported on Linux and Android 10 and above)</li>
+<li>Improved emoji support</li>
+<li>Added keyboard shortcuts and documented them in the guide</li>
+<li>Added CPU, storage and RAM sensors to telemetry system</li>
+<li>Added tank sensor type to telemetry system</li>
+<li>Added fuel level sensor type to telemetry system</li>
+<li>Added proximity, gravity, magnetics and angular velocity to telemetry system</li>
+<li>Added custom sensors to telemetry system</li>
+<li>Updated telemetry plugin examples</li>
+<li>Added audio processing subsystem on supported platforms</li>
+<li>Improved system and navigation bar handling on Android</li>
+<li>Improved functionality of cross-platform device API handling</li>
+<li>Improved message display on attachment-only messages</li>
+<li>Improved Preferences screen layout</li>
+<li>Updated build system to target newer Android SDK</li>
+<li>Fixed a bug that could cause the Send button to not work</li>
+<li>Fixed LXMF delivery limits not getting applied until after app restart</li>
+<li>Fixed a bug that would allow empty commands to be sent</li>
+<li>Added desktop and application launcher integration on Linux</li>
+<li>Added ability to focus message input field by pressing tab</li>
+<li>Added network stats to object details</li>
+<li>Improved example plugins</li>
+<li>Linux GPSd plugin now retains location even when some fields are occassionally missing</li>
+<li>Fixed bugs that caused routing and path request issues over shared radio mediums</li>
+</ul>
+</ul>
+</details>
+<h3>A Realistic Path Forward</h3>
+<p>There are technical features, that I very much personally wished to be part of the first production release of Reticulum, such as full network-wide multicast support, anonymous destination proxies and a comprehensive and developer-oriented application framework full of examples and basic projects to build your own protocols and applications on. The manual and documentation, while already quite comprehensive, could also benefit from updates and additions in many sections.</p>
+<p>All of these are nice and valuable to have, but to be honest, a few of them were mostly included on my wish-list because they are very cool and incredibly interesting to experiment with from a networking perspective. But in terms of actual utility value, right now, they are not very important. Having a stable, functional and complete reference release of Reticulum is a lot more pressing, even though it's hard to resist the constant temptation of adding more advanced features. As such, I think this is the most sensible way forward.</p>
+<p>Reticulum <code>1.0.0</code> will release with the general structure, feature set and API of version <code>0.9.6</code> (which will be the release migrating completely to AES-256 by default). That will be the last release before <code>1.0.0</code> to add any changes to general functionality, the wire format or the API. The core functionality, routing, API and security architecture is now in-place, fully implemented and very well tested in real-world usage. Any potential subsequent releases until <code>1.0.0</code> will solely be maintenance and bugfix releases.</p>
+<p>Once the <code>1.0.0</code> release has happened, additional advanced features can be worked on, at a more considered pace. Realistically, these things will take significant time and resources to implement and test sufficiently, and the project should not be held up in waiting for that, since they do not offer a lot of important value right now.</p>
+<p>In this context, I'd like to address a misconception that I've seen pop up a few times, namely that LXMF group messaging support will require native multicast to be implemented in Reticulum. This is not the case, and the current working design I have for LXMF group messaging functionality does not rely on multicast support, even though it will definitely benefit from it, once it is available.</p>
+<h3>Potential Knows No Limits, Resources Are Always Finite</h3>
+<p>Ideas are a dime a dozen, while keeping the right ones, and throwing out the rest, is an uncertain art. From there, the rest is "just" the grind to actually <em>get things done</em>, and persist until they work reliably. The idea behind Reticulum - <em>a truly distributed, secure and universal communications layer</em> - is not new. It has existed in some shape or form at least since the very early days of the current Internet, and several exploratory efforts have attempted to capture this foundational idea into workable form.</p>
+<p>Of course, Reticulum itself is also such an <em>attempt</em> at realizing a deeper idea. I don't know if it will succeed, or fall short in some unexpected way. But at least it knows what foundational substance it is aiming for. For me personally, this idea started taking residence in my mind around 2011, developed into the first early prototypes and explorations in 2013 and 2014, and in 2016 finally saw the beginning of an earnest and dedicated implementation I could believe in. Then, I held my nose and jumped.</p>
+<p>From the beginning, Reticulum has been a long-term project, and still very much is. In many ways, what happens in the next year or two is not as important as what happens in the next ten or twenty, and that is the timescales I usually try to think in when making decisions about it.</p>
+<p>For good reasons, it's pretty hard to understand, from first glance, just how much work, and how much of my life I personally put into making Reticulum a reality, and for it to not just remain an idea in a drawer. For context, here's a breakdown of additions made to the Reticulum repository, by contributor:</p>
+<p><center><img src="../images/gs.png" width="66%" style="margin-top:12px; margin-bottom: 2px;"/></center></p>
+<p>This is only the core Reticulum reference implementation repository, and does not include any of the auxiliary projects, protocols or clients that I have been the primary implementer of. Of all additions to the code, I committed <strong>97.9%</strong>. The second and third most active contributors come in at <strong>0.87%</strong> and <strong>0.75%</strong>, respectively. The remaining <strong>0.48%</strong> are accounted for by 31 other contributors.</p>
+<p>I'm definitely not displaying this to make anyone's contributions seem small, <strong>because they are not</strong>. Everything has been important, and very much so. I'm trying to illustrate that this was a project that required almost <em>fourteen years</em> of deliberation and constant engagement in some form to realize, and that I personally took on the brunt of that work, risking more or less everything and going it alone, with the very real possibility that it might just be a complete flop. It still <em>might</em> of course, although I don't really think so anymore.</p>
+<p>Fourteen years of engagement with any kind of project will take its toll on anyone. Especially so, when a substantial part of that required sacrificing a lot of important things to make it happen, living under uncertain conditions, and sometimes putting myself under much higher loads than was kind. To put it simply, I'm exhausted, and I need to recover. That will mean cutting away the things that are most taxing for me, and keeping only the things that are most important.</p>
+<p>Before going into what that means, I'll just need to get the following out of the way. If it doesn't apply to you, please disregard, but some of you guys are really not very good at respecting the rather clear request to <em>not</em> email, message or call me privately with technical questions, support or help requests about Reticulum. As I've said before, you will not receive an answer, as there is literally no point in doing so.</p>
+<p>Any questions can be much better answered on the various publicly accessible channels, where other people will also have the opportunity to benefit from the answers in the future (and people won't have to answer the same questions again and again). I'm not saying this to be mean or annoying, but simply because anything else is counter-productive to <em>everyone</em>.</p>
+<p>There's some great and very knowledgeable people in the Reticulum community, who are incredibly helpful and well-informed about how everything works, and the service they have performed here is invaluable. To those people: You know who you are, and holy crap, you've saved my sanity more times than I can count. So, if you're new here: Use these amazing people, and help each other. And <em>please</em>: Treat everyone kindly and with respect, because everyone helping you is doing this out of their own time and good hearts.</p>
+<h3>A Line In The Sand</h3>
+<p>Reading this, some might be inclined to think I won't be working much on Reticulum for the foreseeable future. That would be an incorrect assumption. I don't think I <em>can</em> stop working on it. But I will do this in my own time, at my own pace, according to the right way. As I write this, I can hear the thunder rolling in the distance, out in the mountains. I miss that. I miss being there with my family, and it's been way too long now.</p>
+<p>There are people in my live that have given me so much, and waited so patiently for me. I don't want to keep them waiting any longer. One thing I've learned from this whole mad and exciting adventure, and already wrote a bit about in <a href="../articles/2024_05_16_Are_We_There_Yet.html">the previous post</a>, is that there's things I excel at, and things I don't.</p>
+<p>Participating actively in a large online community, and interacting with a lot of different people over the Internet all the time is one of the things that drain me. I've tried, and accepted defeat. I'm simply <a href="../articles/2024_05_16_Are_We_There_Yet.html#a-fork-in-the-road">not wired for it</a>, and there is no changing that.</p>
+<p>So, that kind of interaction is the first thing that will have to go, unfortunately. It's often been fun, but it's too much. For now, expect that I will not interact very much, if at all with the wider community. I still like you, I just need some peace in my head. With time, I think this will allow me to recover to a point where I can keep track of things from the sideline, and collect all kinds of questions and information requirements from the community into more generalized, long-form responses, documentation updates and code examples that will be beneficial to everyone. But don't expect that to happen in the near future at all, it won't. I'm out. I'm off on the zip-lines, baby.</p>
+<p>Likewise, anything that is not related to the final stretch of getting Reticulum <code>1.0.0</code> complete and released will simply be put on hold for now, until I am fully ready to dedicate myself to it, and have some kind of financial means to dedicate to the work.</p>
+<p>I've deliberated quite a bit about whether I should say this, since I'd hate being seen as seeking pity. But ultimately, it feels right to just be open about it, since it's also a large part of what I've dealt with for the last years. I live with a physical condition that causes me progressively worsening pain in more or less half of my body. Quite ironically, but unsurprisingly, sitting in front of a computer and working for 12 hours straight makes it a lot worse. I've stretched this <em>way</em> further than I should have, but all in all, it was probably worth it. We ain't come this far just to give up on the finish line. But I won't stretch it any further than this. It's time to heal a bit now.</p>
+<p>When <code>1.0.0</code> is out, I am going to take a long break from everything. I'll go bury myself in sand and hug trees for a year straight or something. Eat cake in a bathtub. Slice all my bread with a katana. Dress up as Salvador DalÃ­ and sing Inuit folk songs. That sorta thing. That should also provide some time to potentially collect donations for meaningful periods of focused work. Let's see what happens.</p>
+<p>Hopefully, I'll find myself back in a place, sooner rather than later, where my reality looks more like it did a few years ago. Not being completely exhausted and in constant pain, but more like this:</p>
+<p><img alt="Image" src="../images/psl0846.webp" /></p>
+<p><center>That's the kind of place I need to find again, and if I do, I'll come back better than before. As Jung said:</center></p>
+<p><center><em>"What you deny submits you, what you accept transforms you."</em></center>
+<br/><br/></p>
+<p><center>Just remember: <em>"So long"</em> isn't a goodbye. But just <em>how</em> long before we'll meet again, I don't know. Till' then:</center></p>
+<p><center>Take good care of everything, and especially each other.<br/><br/>â¥ï¸</center>
+<br/><br/>
+<em>PS: You've got this. Almost everything is ready now. It may not be perfect, it never will be, but it's more than good enough to build on. <b>Don't wait for permission</b>. Go build something - <b>now</b> - that helps people, something that grants a bit more freedom to someone, something that lets people communicate and associate freely without being manipulated, monitored or turned into assets by corrupt corporations and governments:</em></p>
+<p><em>Something that creates a new place to stand, and to plant ideas and real human exchanges.</em></p>
+<p><em>Reticulum is Unstoppable Networks For The People. That means <b>the people</b> need to build those networks and the applications running on them. That's not my job, <b>it's yours</b>. Don't wait for a corporation or someone else to do it for you! Don't wait for someone to write a story about it! Don't just stare into space and imagine it! <b>Do it</b>. Forget about the odds, and especially the profits. There are none, and in the end, even the thought of them is pointless.</em></p>
+<p><em>If you want freedom in the world, build it. If you want rights for people, grant them. Don't expect <b>anyone</b> else to do it. Do it yourself, or as a group. Doesn't matter. </em><em>Just do it</em><em>.</em></p>
+<p><em>It was never the point for me to provide a complete solution to everything, and nobody should wait for that. My goal was to provide a set of tools that could build any kind of communications system, while protecting the sovereignty, dignity and humanity of its users. I also tried very hard to design that tool, such that those building would be required to think outside of the tiny box, which has created many of the limitations we currently face.</em></p>
+<p><em>Forget what you know about "servers" and "clients", about "OSI models" and RFCs. You're not in Kansas anymore. Start from scratch, and take this in your hands as something that doesn't demand a particular way of working. If you try to squeeze it into what you already know about networked systems, nothing will make sense, and you might as well use it as a paperweight. Try to see it with clear eyes, and you'll get it. Once you do, you'll have something that is very easy to build some amazing things with.</em>
+<br/><br/></p>
+<br/><hr/><span class="no_print"><center><br/><i>This website is running on a 100% solar powered server</i><br/><br/>âï¸<br/><br/><i><small>Unless otherwise noted, everything here is put into the world under a <a href="../LICENSE.txt">CC BY-NC-SA 4.0</a> license.<br/>Feel free to share and remix, just remember the attribution.
+</small></i></center></span>
+<div class="print_only donation_block"><br/>
+Contribute to keeping information on Free & Open Communications systems available for all.<br/>
+You can donate directly to <b>unsigned.io</b> by using one of the following QR codes:<br/><br/>
+<span class="donate_qr"><img src="../gfx/donate_xmr.png"/><br/>Monero</span>
+<span class="donate_qr"><img src="../gfx/donate_btc.png"/><br/>Bitcoin</span>
+<span class="donate_qr"><img src="../gfx/donate_eth.png"/><br/>Ethereum</span>
+</div>
+</body></html>

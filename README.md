@@ -21,7 +21,7 @@ Questions, feedback, bug reports: lxmf@ae623c940a36d9215da1893f6a3028bd
 ```bash
 uv sync
 
-uv run python html2mu.py  # example usage in html2mu.py
+uv run python example.py  # example usage in html2mu.py
 ```
 
 ### Limitations

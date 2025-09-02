@@ -80,9 +80,9 @@ def webpage_to_micron(url: str) -> str:
 if __name__ == '__main__':
     url = 'https://news.ycombinator.com/'
     html = req.get(url).text
-    soup = BeautifulSoup(html, 'html.parser')
+    # soup = BeautifulSoup(html, 'html.parser')
     # submissions = soup.find_all('table')[2]
-    result_md = convert_to_markdown(soup, custom_converters={'table': wrap_table})
+    result_md = convert_to_markdown(html, custom_converters={'table': wrap_table})
     print(result_md)
     print('-----------------------')
 
